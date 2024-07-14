@@ -68,6 +68,7 @@ GOOGLE_PLACES_API_KEY=your_google_place_api_key_here
 
 ![Filament Google Autcomplete Field](https://raw.githubusercontent.com/TappNetwork/filament-google-autocomplete-field/main/docs/autocomplete05.png)
 
+![Filament Google Autcomplete Field](https://raw.githubusercontent.com/TappNetwork/filament-google-autocomplete-field/main/docs/autocomplete06.png)
 
 ## Usage
 
