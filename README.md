@@ -106,7 +106,7 @@ GoogleAutocomplete::make('google_search')
 
 ### Autocompleted Fields
 
-You can use the `withFields` to define the fields that will be autocompleted.
+You can use the `withFields` method to define the fields that will be autocompleted.
 
 By default the following fields are set if this method isn't provided:
 
@@ -126,7 +126,7 @@ Forms\Components\TextInput::make('zip')
     ]),
 ```
 
-You can override these default fields by passing an array of the Filament form fields to `withFields` method:
+You can override these default fields by passing an array of Filament form fields to `withFields` method:
 
 ```php
 GoogleAutocompleteFields::make('google_search')
@@ -159,7 +159,7 @@ Forms\Components\TextInput::make('coordinates')
 
 #### Field Name
 
-If your database field have a different name than the Google field (for example you DB field is `zip` and you want to use the Google's `postal_code` value returned by API), you can tie the API field to the DB field by passing the `'data-google-field'` to the `extraInputAttributes` method like so: 
+If your database field have a different name than the Google field (for example you DB field is `zip` and you want to use the Google's `postal_code` value returned by API), you can tie the API field to the DB field by passing your DB field name to `'data-google-field'` on `extraInputAttributes` method like so: 
 
 ```php
 Forms\Components\TextInput::make('zip')
@@ -191,7 +191,7 @@ longitude,
 
 #### long_name and short_name 
 
-Google's API returns long_name and short_name options for address fields. You can choose which one to display by passing the `'data-google-value'` to the `extraInputAttributes` method: 
+Google's Places API returns `long_name` and `short_name` values for address fields. You can choose which one to display by passing it to the `'data-google-value'` on `extraInputAttributes` method: 
 
 ```php
 Forms\Components\TextInput::make('country')
@@ -259,9 +259,9 @@ These following **Google API options** can be passed to the `GoogleAutocomplete`
 
 ### Countries
 
-Add the `countries` method to restrict the countries that should be used for search.
+Add the `countries` method to restrict the countries that should be used for autocomplete search.
 
-The countries must be passed as a two character ISO 3166-1 Alpha-2 compatible country code. You can find the country codes available at [Wikipedia: List of ISO 3166 country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+The countries must be passed as a two character ISO 3166-1 Alpha-2 compatible country code. You can find the country codes available at [Wikipedia: List of ISO 3166 country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
 
 ```php
 GoogleAutocomplete::make('google_search')
@@ -286,6 +286,11 @@ The point around which to retrieve place information as `latitude,longitude`.
 
 Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#location) to a detailed description of this option.
 
+```php
+GoogleAutocomplete::make('google_search')
+    ->location(40.7585862,-73.9858202)
+```
+
 ### LocationBias
 
 Prefer results in a specified area, by specifying either a radius plus lat/lng, or two lat/lng pairs representing the points of a rectangle. If this parameter is not specified, the API uses IP address biasing by default.
@@ -302,17 +307,32 @@ Please refer to the [Google documentation](https://developers.google.com/maps/do
 
 The position, in the input term, of the last character that the service uses to match predictions. For example, if the input is Google and the offset is 3, the service will match on Goo. 
 
+```php
+GoogleAutocomplete::make('google_search')
+    ->offset(5)
+```
+
 ### Origin
 
 The origin point as `latitude,longitude` from which to calculate straight-line distance to the destination specified.
 
 Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#origin) to a detailed description of this option.
 
+```php
+GoogleAutocomplete::make('google_search')
+    ->origin(40.7585862,-73.9858202)
+```
+
 ### Radius
 
 The distance in meters within which to return place results.
 
 Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#radius) to a detailed description of this option.
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->radius(10)
+```
 
 ### Region
 
@@ -343,7 +363,6 @@ GoogleAutocomplete::make('google_search')
 ```
 
 Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types) to a detailed description of this option.
-
 
 ## Testing
 
