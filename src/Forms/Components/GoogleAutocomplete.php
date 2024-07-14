@@ -3,28 +3,27 @@
 namespace Tapp\FilamentGoogleAutocomplete\Forms\Components;
 
 use Closure;
+use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Concerns;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Filament\Forms;
 use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\HtmlString;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\HtmlString;
 use SKAgarwal\GoogleApi\PlacesApi;
 use Tapp\FilamentGoogleAutocomplete\Concerns\CanFormatGoogleParams;
 use Tapp\FilamentGoogleAutocomplete\Concerns\HasGooglePlaceApi;
 
 class GoogleAutocomplete extends Component
 {
+    use CanFormatGoogleParams;
     use Concerns\CanAllowHtml;
     use Concerns\CanBeNative;
     use Concerns\CanBePreloaded;
     use Concerns\CanBeSearchable;
     use Concerns\HasLoadingMessage;
     use Concerns\HasName;
-    use CanFormatGoogleParams;
     use HasGooglePlaceApi;
 
     /**
@@ -32,17 +31,17 @@ class GoogleAutocomplete extends Component
      */
     protected string $view = 'filament-forms::components.fieldset';
 
-    protected bool | Closure $isRequired = false;
+    protected bool|Closure $isRequired = false;
 
     protected array $params = [];
 
-    public array | null $withFields = [];
+    public ?array $withFields = [];
 
-    protected string | Closure $autocompleteFieldColumnSpan = 'full';
+    protected string|Closure $autocompleteFieldColumnSpan = 'full';
 
-    protected int | Closure $autocompleteSearchDebounce = 2000; // 2 seconds
+    protected int|Closure $autocompleteSearchDebounce = 2000; // 2 seconds
 
-    protected array | Closure $addressFieldsColumns = [];
+    protected array|Closure $addressFieldsColumns = [];
 
     final public function __construct(string $name)
     {
@@ -80,8 +79,8 @@ class GoogleAutocomplete extends Component
             ->getSearchResultsUsing(function (string $search): array {
                 $result = $this->getPlaceAutocomplete($search);
 
-                if (!empty($result['predictions'])) {
-                    $searchResults = $result['predictions']->mapWithKeys( function (array $item, int $key) {
+                if (! empty($result['predictions'])) {
+                    $searchResults = $result['predictions']->mapWithKeys(function (array $item, int $key) {
                         return [$item['place_id'] => $item['description']];
                     });
 
@@ -126,7 +125,7 @@ class GoogleAutocomplete extends Component
             Forms\Components\Grid::make($this->getAddressFieldsColumns())
                 ->schema(
                     $allComponents
-                )
+                ),
         ];
     }
 
@@ -134,7 +133,7 @@ class GoogleAutocomplete extends Component
     {
         preg_match_all('/{(.*?)}/', $googleField, $matches);
 
-        foreach($matches[1] as $item) {
+        foreach ($matches[1] as $item) {
             $valueToReplace = isset($googleFields[$item][$googleFieldValue]) ? $googleFields[$item][$googleFieldValue] : '';
 
             $googleField = str_ireplace('{'.$item.'}', $valueToReplace, $googleField);
@@ -143,7 +142,7 @@ class GoogleAutocomplete extends Component
         return $googleField;
     }
 
-    public function withFields(null | array | string | \Closure $fields): static
+    public function withFields(null|array|string|\Closure $fields): static
     {
         $this->withFields = $fields;
 
@@ -154,26 +153,26 @@ class GoogleAutocomplete extends Component
     {
         if (empty($this->withFields)) {
             return [
-                    Forms\Components\TextInput::make('address')
-                        ->extraInputAttributes([
-                            'data-google-field' => '{street_number} {route}, {sublocality_level_1}',
-                        ]),
-                    Forms\Components\TextInput::make('city')
-                        ->extraInputAttributes([
-                            'data-google-field' => 'locality',
-                        ]),
-                    Forms\Components\TextInput::make('country'),
-                    Forms\Components\TextInput::make('zip')
-                        ->extraInputAttributes([
-                            'data-google-field' => 'postal_code',
-                        ]),
+                Forms\Components\TextInput::make('address')
+                    ->extraInputAttributes([
+                        'data-google-field' => '{street_number} {route}, {sublocality_level_1}',
+                    ]),
+                Forms\Components\TextInput::make('city')
+                    ->extraInputAttributes([
+                        'data-google-field' => 'locality',
+                    ]),
+                Forms\Components\TextInput::make('country'),
+                Forms\Components\TextInput::make('zip')
+                    ->extraInputAttributes([
+                        'data-google-field' => 'postal_code',
+                    ]),
             ];
         }
 
         return $this->evaluate($this->withFields);
     }
 
-    public function autocompleteFieldColumnSpan(string | \Closure $autocompleteFieldColumnSpan = 'full'): static
+    public function autocompleteFieldColumnSpan(string|\Closure $autocompleteFieldColumnSpan = 'full'): static
     {
         $this->autocompleteFieldColumnSpan = $autocompleteFieldColumnSpan;
 
@@ -187,7 +186,7 @@ class GoogleAutocomplete extends Component
         return $this->evaluate($this->autocompleteFieldColumnSpan);
     }
 
-    public function addressFieldsColumns(null | array | string | \Closure $addressFieldsColumns): static
+    public function addressFieldsColumns(null|array|string|\Closure $addressFieldsColumns): static
     {
         $this->addressFieldsColumns = $addressFieldsColumns;
 
@@ -206,7 +205,7 @@ class GoogleAutocomplete extends Component
         return $this->evaluate($this->addressFieldsColumns);
     }
 
-    public function autocompleteSearchDebounce(int | \Closure $autocompleteSearchDebounce = 2000): static
+    public function autocompleteSearchDebounce(int|\Closure $autocompleteSearchDebounce = 2000): static
     {
         $this->autocompleteSearchDebounce = $autocompleteSearchDebounce;
 

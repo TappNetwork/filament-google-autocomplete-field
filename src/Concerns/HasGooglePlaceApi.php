@@ -28,27 +28,27 @@ trait HasGooglePlaceApi
         'website',
     ];
 
-    protected string | array | Closure | null $countries = null;
+    protected string|array|Closure|null $countries = null;
 
-    protected string | Closure | null $language = null;
+    protected string|Closure|null $language = null;
 
-    protected string | Closure | null $location = null;
+    protected string|Closure|null $location = null;
 
-    protected string | Closure | null $locationBias = null;
+    protected string|Closure|null $locationBias = null;
 
-    protected string | Closure | null $locationRestriction = null;
+    protected string|Closure|null $locationRestriction = null;
 
-    protected int | Closure | null $offset = null;
+    protected int|Closure|null $offset = null;
 
-    protected string | Closure | null $origin = null;
+    protected string|Closure|null $origin = null;
 
-    protected int | Closure | null $radius = null;
+    protected int|Closure|null $radius = null;
 
-    protected string | Closure | null $region = null;
+    protected string|Closure|null $region = null;
 
-    protected string | Closure | null $sessionToken = null;
+    protected string|Closure|null $sessionToken = null;
 
-    protected string | array | Closure | null $placeTypes = null;
+    protected string|array|Closure|null $placeTypes = null;
 
     protected function getPlaceAutocomplete($search)
     {
@@ -72,7 +72,7 @@ trait HasGooglePlaceApi
                 $item['types'][0] => [
                     'long_name' => $item['long_name'],
                     'short_name' => $item['short_name'],
-                ]
+                ],
             ];
         }, array_keys($addressComponents), $addressComponents));
 
@@ -85,7 +85,7 @@ trait HasGooglePlaceApi
                     $key => [
                         'long_name' => $item,
                         'short_name' => $item,
-                    ]
+                    ],
                 ];
             } else {
                 return [];
@@ -108,7 +108,7 @@ trait HasGooglePlaceApi
         return array_merge($addressFields, $extraFields, $latLngFields);
     }
 
-    public function countries(array | string | Closure | null $countries): static
+    public function countries(array|string|Closure|null $countries): static
     {
         $countries = Arr::wrap($countries);
 
@@ -124,7 +124,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->countries);
     }
 
-    public function language(string | Closure | null $language): static
+    public function language(string|Closure|null $language): static
     {
         $this->language = $language;
 
@@ -138,7 +138,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->language);
     }
 
-    public function location(string | Closure | null $location): static
+    public function location(string|Closure|null $location): static
     {
         $this->location = $location;
 
@@ -152,7 +152,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->location);
     }
 
-    public function locationBias(string | Closure | null $locationBias): static
+    public function locationBias(string|Closure|null $locationBias): static
     {
         $this->locationBias = $locationBias;
 
@@ -166,7 +166,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->locationBias);
     }
 
-    public function locationRestriction(string | Closure | null $locationRestriction): static
+    public function locationRestriction(string|Closure|null $locationRestriction): static
     {
         $this->locationRestriction = $locationRestriction;
 
@@ -180,7 +180,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->locationRestriction);
     }
 
-    public function offset(int | Closure | null $offset): static
+    public function offset(int|Closure|null $offset): static
     {
         $this->offset = $offset;
 
@@ -194,7 +194,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->offset);
     }
 
-    public function origin(string | Closure | null $origin): static
+    public function origin(string|Closure|null $origin): static
     {
         $this->origin = $origin;
 
@@ -208,7 +208,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->origin);
     }
 
-    public function radius(int | Closure | null $radius): static
+    public function radius(int|Closure|null $radius): static
     {
         $this->radius = $radius;
 
@@ -222,7 +222,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->radius);
     }
 
-    public function region(string | Closure | null $region): static
+    public function region(string|Closure|null $region): static
     {
         $this->region = $region;
 
@@ -236,7 +236,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->region);
     }
 
-    public function sessionToken(string | Closure | null $sessionToken): static
+    public function sessionToken(string|Closure|null $sessionToken): static
     {
         $this->sessionToken = $sessionToken;
 
@@ -250,7 +250,7 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->sessionToken);
     }
 
-    public function placeTypes(array | string | Closure | null $placeTypes): static
+    public function placeTypes(array|string|Closure|null $placeTypes): static
     {
         $placeTypes = Arr::wrap($placeTypes);
 
