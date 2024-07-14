@@ -8,7 +8,7 @@
 This plugin provides an address autocomplete using [Google Place autocomplete API](https://developers.google.com/maps/documentation/places/web-service/autocomplete), with fully customizable address fields.
 
 > [!NOTE]
-> The package(https://github.com/SachinAgarwal1337/google-places-api) is used to make API requests to Google Places.
+> The [Google Places API package](https://github.com/SachinAgarwal1337/google-places-api) is used to make API requests to Google Places.
 
 ## Installation
 
@@ -32,10 +32,9 @@ return [
     'api-key' => env('GOOGLE_PLACES_API_KEY', ''),
 
 ];
-
 ```
 
-Optionally, you can publish the translations files with:
+Optionally, you can publish the translation files with:
 
 ```bash
 php artisan vendor:publish --tag="filament-google-autocomplete-field-translations"
@@ -45,10 +44,10 @@ php artisan vendor:publish --tag="filament-google-autocomplete-field-translation
 
 On [Google console](https://console.cloud.google.com/apis/dashboard), create an application and enable the Places API.
 
-1. click on "ENABLE APIS AND SERVICES"
-2. search for "Places api"
-3. click to enable it
-4. get the API key
+1. Click on "ENABLE APIS AND SERVICES"
+2. Search for "Places api"
+3. Click to enable it
+4. Get the API key
 
 In your Laravel application, add the Google API key to `GOOGLE_PLACES_API_KEY` in your `.env` file:
 
@@ -57,8 +56,6 @@ GOOGLE_PLACES_API_KEY=your_google_place_api_key_here
 ```
 
 ## Appareance
-
-![Filament Google Autcomplete Field](https://raw.githubusercontent.com/TappNetwork/filament-google-autocomplete-field/main/docs/autocomplete01.png)
 
 ![Filament Google Autcomplete Field](https://raw.githubusercontent.com/TappNetwork/filament-google-autocomplete-field/main/docs/autocomplete02.png)
 
@@ -75,16 +72,15 @@ GOOGLE_PLACES_API_KEY=your_google_place_api_key_here
 Add the `GoogleAutocomplete` field to your form:
 
 ```php
-use Tapp\FilamentGoogleAutocompleteField\GoogleAutocomplete;
+use Tapp\FilamentGoogleAutocomplete\Forms\Components\GoogleAutocomplete;
 
 GoogleAutocomplete::make('google_search'),
 ```
 
-This will use the default address fields and Google API options. You can also customize the address fields and Google Place API options (see the options available on `Available options` itens below). For example:
-
+This will use the default address fields and Google API options. You can also customize the address fields and Google Place API options. See all the options available on [`Available options`](#available-options) item below. For example:
 
 ```php
-use Tapp\FilamentGoogleAutocomplete\GoogleAutocomplete;
+use Tapp\FilamentGoogleAutocomplete\Forms\Components\GoogleAutocomplete;
 
 GoogleAutocomplete::make('google_search')
     ->label('Google look-up')
@@ -106,7 +102,7 @@ GoogleAutocomplete::make('google_search')
     ]),
 ```
 
-## Available options
+## Available Options
 
 ### Autocompleted Fields
 
