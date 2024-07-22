@@ -81,10 +81,7 @@
         "laravel": {
             "providers": [
                 "Tapp\\FilamentGoogleAutocomplete\\FilamentGoogleAutocompleteServiceProvider"
-            ],
-            "aliases": {
-                "FilamentGoogleAutocomplete": "Tapp\\FilamentGoogleAutocomplete\\Facades\\FilamentGoogleAutocomplete"
-            }
+            ]
         }
     },
     "minimum-stability": "dev",
