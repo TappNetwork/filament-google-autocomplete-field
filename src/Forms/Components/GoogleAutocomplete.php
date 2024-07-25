@@ -89,7 +89,15 @@ class GoogleAutocomplete extends Component
 
                 return [];
             })
-            ->afterStateUpdated(function (string $state, Get $get, Set $set, Component $component) {
+            ->afterStateUpdated(function (?string $state, Set $set) {
+                if ($state === null) {
+                    foreach ($this->getWithFields() as $field) {
+                        $set($field->getName(), null);
+                    }
+
+                    return;
+                }
+
                 $data = $this->getPlace($state);
 
                 $googleFields = $this->getFormattedApiResults($data);
