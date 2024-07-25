@@ -6,7 +6,6 @@ use Closure;
 use Filament\Forms;
 use Filament\Forms\Components\Component;
 use Filament\Forms\Components\Concerns;
-use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
@@ -89,7 +88,15 @@ class GoogleAutocomplete extends Component
 
                 return [];
             })
-            ->afterStateUpdated(function (string $state, Get $get, Set $set, Component $component) {
+            ->afterStateUpdated(function (?string $state, Set $set) {
+                if ($state === null) {
+                    foreach ($this->getWithFields() as $field) {
+                        $set($field->getName(), null);
+                    }
+
+                    return;
+                }
+
                 $data = $this->getPlace($state);
 
                 $googleFields = $this->getFormattedApiResults($data);
