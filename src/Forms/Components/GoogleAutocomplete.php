@@ -17,11 +17,6 @@ use Tapp\FilamentGoogleAutocomplete\Concerns\HasGooglePlaceApi;
 class GoogleAutocomplete extends Component
 {
     use CanFormatGoogleParams;
-    use Concerns\CanAllowHtml;
-    use Concerns\CanBeNative;
-    use Concerns\CanBePreloaded;
-    use Concerns\CanBeSearchable;
-    use Concerns\HasLoadingMessage;
     use Concerns\HasName;
     use HasGooglePlaceApi;
 
