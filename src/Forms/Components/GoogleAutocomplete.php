@@ -17,11 +17,6 @@ use Tapp\FilamentGoogleAutocomplete\Concerns\HasGooglePlaceApi;
 class GoogleAutocomplete extends Component
 {
     use CanFormatGoogleParams;
-    use Concerns\CanAllowHtml;
-    use Concerns\CanBeNative;
-    use Concerns\CanBePreloaded;
-    use Concerns\CanBeSearchable;
-    use Concerns\HasLoadingMessage;
     use Concerns\HasName;
     use HasGooglePlaceApi;
 
@@ -67,6 +62,7 @@ class GoogleAutocomplete extends Component
 
         $components[] = Forms\Components\Select::make('google_autocomplete')
             ->native(false)
+            ->dehydrated(false)
             ->allowHtml()
             ->live()
             ->searchDebounce($this->getAutocompleteSearchDebounce()) // 2 seconds
