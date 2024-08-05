@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.2 - 2024-08-05
+
+### What's Changed
+
+* Prevent google_autocomplete select from being dehydrated by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/5
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.1...v1.0.2
+
 ## v1.0.1 - 2024-07-25
 
 ### What's Changed
