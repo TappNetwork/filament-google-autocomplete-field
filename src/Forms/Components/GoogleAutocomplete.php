@@ -108,7 +108,11 @@ class GoogleAutocomplete extends Component
                     if (str_contains($googleFieldName, '{')) {
                         $value = $this->replaceFieldPlaceholders($googleFieldName, $googleFields, $googleFieldValue);
                     } else {
-                        $value = $googleFields[$googleFieldName][$googleFieldValue] ?: '';
+                        // bc: Fixes issue with Carson City, NV.  No administrative_area_level_2 provided in search result.
+                        $value = '';
+                        if (isset($googleFields[$googleFieldName][$googleFieldValue])) {
+                            $value = $googleFields[$googleFieldName][$googleFieldValue] ?: '';
+                        }
                     }
 
                     $set($field->getName(), $value);
