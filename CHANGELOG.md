@@ -2,6 +2,18 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.3 - 2024-10-27
+
+### What's Changed
+
+* Fixes error thrown if administrative_area_level_2 is missing in search result by @bcash in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/6
+
+### New Contributors
+
+* @bcash made their first contribution in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/6
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.2...v1.0.3
+
 ## v1.0.2 - 2024-08-05
 
 ### What's Changed
