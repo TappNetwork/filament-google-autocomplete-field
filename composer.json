@@ -25,7 +25,7 @@
         "spatie/laravel-package-tools": "^1.16",
         "filament/filament": "^3.0-stable",
         "illuminate/contracts": "^10.0||^11.0",
-        "skagarwal/google-places-api": "^2.2"
+        "skagarwal/google-places-api": "^3.0"
     },
     "require-dev": {
         "larastan/larastan": "^2.9",
