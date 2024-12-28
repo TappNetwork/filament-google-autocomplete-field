@@ -116,6 +116,7 @@ class GoogleAutocomplete extends Component
                     }
 
                     $set($field->getName(), $value);
+                    $field->callAfterStateUpdated();
                 }
             });
 
