@@ -2,6 +2,18 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.5 - 2024-12-30
+
+### What's Changed
+
+* Call afterStateUpdated hook on value change by @JacobDelcroix in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/10
+
+### New Contributors
+
+* @JacobDelcroix made their first contribution in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/10
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.4...v1.0.5
+
 ## v1.0.4 - 2024-12-02
 
 ### What's Changed
