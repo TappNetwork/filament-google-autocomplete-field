@@ -10,11 +10,11 @@ use Filament\Forms\Set;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
-use SKAgarwal\GoogleApi\PlacesApi;
 use Tapp\FilamentGoogleAutocomplete\Concerns\CanFormatGoogleParams;
 use Tapp\FilamentGoogleAutocomplete\Concerns\HasGooglePlaceApi;
-use SKAgarwal\GoogleApi\Places\GooglePlaces; // Original places API class
-use SKAgarwal\GoogleApi\PlacesNew\GooglePlaces as GooglePlacesNew; // places API new class
+
+// Original places API class
+// places API new class
 
 class GoogleAutocomplete extends Component
 {
