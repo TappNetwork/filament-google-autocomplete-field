@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.6 - 2025-01-05
+
+### What's Changed
+
+* Add support to Google Places API (New) by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/11
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.5...v1.0.6
+
 ## v1.0.5 - 2024-12-30
 
 ### What's Changed
