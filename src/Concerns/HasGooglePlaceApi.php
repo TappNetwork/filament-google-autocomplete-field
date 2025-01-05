@@ -19,22 +19,48 @@ trait HasGooglePlaceApi
         'postal_code',
     ];
 
-    protected array $googleAddressExtraFieldNames = [
-        'place_id',
-        'formatted_phone_number',
-        'international_phone_number',
-        'formatted_address',
-        'name',
-        'website',
+    protected array $apiNamingConventions = [
+        'newApi' => [
+            'longText' => 'longText',
+            'shortText' => 'shortText',
+            'googleAddressExtraFieldNames' => [
+                'id',
+                'nationalPhoneNumber',
+                'internationalPhoneNumber',
+                'formattedAddress',
+                'displayName',
+                'websiteUri',
+            ],
+        ],
+        'originalApi' => [
+            'longText' => 'long_name',
+            'shortText' => 'short_name',
+            'googleAddressExtraFieldNames' => [
+                'place_id',
+                'formatted_phone_number',
+                'international_phone_number',
+                'formatted_address',
+                'name',
+                'website',
+            ],
+        ],
     ];
 
+    protected array $currentApiNamingConventions = [];
+
+    protected bool|Closure $placesApiNew = false;
+
+    protected bool|Closure $includePureServiceAreaBusinesses = false;
+
     protected string|array|Closure|null $countries = null;
+
+    protected array|Closure|null $includedRegionCodes = null;
 
     protected string|Closure|null $language = null;
 
     protected string|Closure|null $location = null;
 
-    protected string|Closure|null $locationBias = null;
+    protected string|array|Closure|null $locationBias = null;
 
     protected string|Closure|null $locationRestriction = null;
 
@@ -52,11 +78,19 @@ trait HasGooglePlaceApi
 
     protected function getPlaceAutocomplete($search)
     {
+        $this->setGoogleApi();
+
+        if ($this->placesApiNew) {
+            return $this->googlePlaces->autocomplete($search, false, ['*'], $this->params);
+        }
+
         return $this->googlePlaces->placeAutocomplete($search, $this->params);
     }
 
     protected function getPlace(string $placeId)
     {
+        $this->setGoogleApi();
+
         $addressData = $this->googlePlaces->placeDetails($placeId);
 
         return $addressData;
@@ -64,23 +98,59 @@ trait HasGooglePlaceApi
 
     protected function getFormattedApiResults($data): array
     {
-        $addressComponents = $data['result']['address_components'];
+        $response = $data->collect();
+
+        if ($this->placesApiNew) {
+            $addressComponents = $response['addressComponents'];
+
+            $latLngFields = [
+                'latitude' => [
+                    'long_name' => $response['location']['latitude'],
+                    'short_name' => $response['location']['latitude'],
+                ],
+                'longitude' => [
+                    'long_name' => $response['location']['longitude'],
+                    'short_name' => $response['location']['longitude'],
+                ],
+            ];
+
+            $extraFields = $response->toArray();
+        } else {
+            $result = $response['result'];
+
+            $addressComponents = $result['address_components'];
+
+            $latLngFields = $result['geometry']['location'];
+
+            $latLngFields = [
+                'latitude' => [
+                    'long_name' => $latLngFields['lat'],
+                    'short_name' => $latLngFields['lat'],
+                ],
+                'longitude' => [
+                    'long_name' => $latLngFields['lng'],
+                    'short_name' => $latLngFields['lng'],
+                ],
+            ];
+
+            $extraFields = $result;
+        }
 
         // array map with keys
         $addressFields = array_merge(...array_map(function ($key, $item) {
             return [
                 $item['types'][0] => [
-                    'long_name' => $item['long_name'],
-                    'short_name' => $item['short_name'],
+                    'long_name' => $item[$this->currentApiNamingConventions['longText']],
+                    'short_name' => $item[$this->currentApiNamingConventions['shortText']],
                 ],
             ];
         }, array_keys($addressComponents), $addressComponents));
 
-        $extraFields = $data['result'];
-
         // array map with keys
         $extraFields = array_merge(...array_map(function ($key, $item) {
-            if (in_array($key, $this->googleAddressExtraFieldNames)) {
+            if (in_array($key, $this->currentApiNamingConventions['googleAddressExtraFieldNames'])) {
+                $item = $key === 'displayName' ? $item['text'] : $item;
+
                 return [
                     $key => [
                         'long_name' => $item,
@@ -92,20 +162,52 @@ trait HasGooglePlaceApi
             }
         }, array_keys($extraFields), $extraFields));
 
-        $latLngFields = $data['result']['geometry']['location'];
-
-        $latLngFields = [
-            'latitude' => [
-                'long_name' => $latLngFields['lat'],
-                'short_name' => $latLngFields['lat'],
-            ],
-            'longitude' => [
-                'long_name' => $latLngFields['lng'],
-                'short_name' => $latLngFields['lng'],
-            ],
-        ];
-
         return array_merge($addressFields, $extraFields, $latLngFields);
+    }
+
+    public function placesApiNew(bool|Closure $placesApiNew = true): static
+    {
+        $this->placesApiNew = $placesApiNew;
+
+        return $this;
+    }
+
+    public function getPlacesApiNew(): bool
+    {
+        return $this->evaluate($this->placesApiNew);
+    }
+
+    public function includePureServiceAreaBusinesses(bool|Closure $includePureServiceAreaBusinesses = false): static
+    {
+        $this->params['includePureServiceAreaBusinesses'] = $includePureServiceAreaBusinesses;
+
+        $this->includePureServiceAreaBusinesses = $includePureServiceAreaBusinesses;
+
+        return $this;
+    }
+
+    public function getIncludePureServiceAreaBusinesses(): bool
+    {
+        return $this->evaluate($this->includePureServiceAreaBusinesses);
+    }
+
+    protected function setGoogleApi()
+    {
+        $googleClass = 'SKAgarwal\GoogleApi\Places\GooglePlaces';
+
+        $this->currentApiNamingConventions = $this->apiNamingConventions['originalApi'];
+
+        if ($this->placesApiNew) {
+            $googleClass = 'SKAgarwal\GoogleApi\PlacesNew\GooglePlaces';
+
+            $this->currentApiNamingConventions = $this->apiNamingConventions['newApi'];
+        }
+
+        $this->googlePlaces = $googleClass::make(
+            key: config('filament-google-autocomplete-field.api-key'),
+            verifySSL: config('filament-google-autocomplete-field.verify-ssl'),
+            throwOnErrors: config('filament-google-autocomplete-field.throw-on-errors'),
+        );
     }
 
     public function countries(array|string|Closure|null $countries): static
@@ -124,11 +226,31 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->countries);
     }
 
+    public function includedRegionCodes(array|Closure|null $includedRegionCodes): static
+    {
+        $includedRegionCodes = Arr::wrap($includedRegionCodes);
+
+        $this->includedRegionCodes = $includedRegionCodes;
+
+        $this->params['includedRegionCodes'] = $includedRegionCodes;
+
+        return $this;
+    }
+
+    public function getIncludedRegionCodes(): ?array
+    {
+        return $this->evaluate($this->includedRegionCodes);
+    }
+
     public function language(string|Closure|null $language): static
     {
         $this->language = $language;
 
-        $this->params['language'] = $language;
+        if ($this->placesApiNew) {
+            $this->params['languageCode'] = $language;
+        } else {
+            $this->params['language'] = $language;
+        }
 
         return $this;
     }
@@ -152,16 +274,20 @@ trait HasGooglePlaceApi
         return $this->evaluate($this->location);
     }
 
-    public function locationBias(string|Closure|null $locationBias): static
+    public function locationBias(string|array|Closure|null $locationBias): static
     {
         $this->locationBias = $locationBias;
 
-        $this->params['locationbias'] = $locationBias;
+        if ($this->placesApiNew) {
+            $this->params['locationBias'] = $locationBias;
+        } else {
+            $this->params['locationbias'] = $locationBias;
+        }
 
         return $this;
     }
 
-    public function getLocationBias(): ?string
+    public function getLocationBias(): null|string|array
     {
         return $this->evaluate($this->locationBias);
     }
@@ -170,7 +296,11 @@ trait HasGooglePlaceApi
     {
         $this->locationRestriction = $locationRestriction;
 
-        $this->params['locationrestriction'] = $locationRestriction;
+        if ($this->placesApiNew) {
+            $this->params['locationRestriction'] = $locationRestriction;
+        } else {
+            $this->params['locationrestriction'] = $locationRestriction;
+        }
 
         return $this;
     }
@@ -184,7 +314,11 @@ trait HasGooglePlaceApi
     {
         $this->offset = $offset;
 
-        $this->params['offset'] = $offset;
+        if ($this->placesApiNew) {
+            $this->params['inputOffset'] = $offset;
+        } else {
+            $this->params['offset'] = $offset;
+        }
 
         return $this;
     }
@@ -226,7 +360,11 @@ trait HasGooglePlaceApi
     {
         $this->region = $region;
 
-        $this->params['region'] = $region;
+        if ($this->placesApiNew) {
+            $this->params['regionCode'] = $region;
+        } else {
+            $this->params['region'] = $region;
+        }
 
         return $this;
     }
@@ -240,7 +378,11 @@ trait HasGooglePlaceApi
     {
         $this->sessionToken = $sessionToken;
 
-        $this->params['sessiontoken'] = $sessionToken;
+        if ($this->placesApiNew) {
+            $this->params['sessionToken'] = $sessionToken;
+        } else {
+            $this->params['sessiontoken'] = $sessionToken;
+        }
 
         return $this;
     }
@@ -256,7 +398,11 @@ trait HasGooglePlaceApi
 
         $this->placeTypes = $placeTypes;
 
-        $this->params['types'] = $this->getFormattedPlaceTypes($placeTypes);
+        if ($this->placesApiNew) {
+            $this->params['includedPrimaryTypes'] = $placeTypes;
+        } else {
+            $this->params['types'] = $this->getFormattedPlaceTypes($placeTypes);
+        }
 
         return $this;
     }

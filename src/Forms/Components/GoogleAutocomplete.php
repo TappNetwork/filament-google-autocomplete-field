@@ -10,9 +10,11 @@ use Filament\Forms\Set;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
-use SKAgarwal\GoogleApi\PlacesApi;
 use Tapp\FilamentGoogleAutocomplete\Concerns\CanFormatGoogleParams;
 use Tapp\FilamentGoogleAutocomplete\Concerns\HasGooglePlaceApi;
+
+// Original places API class
+// places API new class
 
 class GoogleAutocomplete extends Component
 {
@@ -40,8 +42,6 @@ class GoogleAutocomplete extends Component
     final public function __construct(string $name)
     {
         $this->name($name);
-
-        $this->googlePlaces = new PlacesApi(config('filament-google-autocomplete-field.api-key'));
     }
 
     public static function make(string $name): static
@@ -72,17 +72,11 @@ class GoogleAutocomplete extends Component
             ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete" />')))
             ->columnSpan($this->getAutocompleteFieldColumnSpan())
             ->getSearchResultsUsing(function (string $search): array {
-                $result = $this->getPlaceAutocomplete($search);
+                $response = $this->getPlaceAutocomplete($search);
 
-                if (! empty($result['predictions'])) {
-                    $searchResults = $result['predictions']->mapWithKeys(function (array $item, int $key) {
-                        return [$item['place_id'] => $item['description']];
-                    });
+                $result = $response->collect();
 
-                    return $searchResults->toArray();
-                }
-
-                return [];
+                return $this->getPlaceAutocompleteResult($result);
             })
             ->afterStateUpdated(function (?string $state, Set $set) {
                 if ($state === null) {
@@ -148,6 +142,29 @@ class GoogleAutocomplete extends Component
         }
 
         return $googleField;
+    }
+
+    protected function getPlaceAutocompleteResult($result)
+    {
+        if ($this->placesApiNew) {
+            if (isset($result['suggestions']) && ! empty($result['suggestions'])) {
+                $searchResults = collect($result['suggestions'])->mapWithKeys(function (array $item, int $key) {
+                    return [$item['placePrediction']['placeId'] => $item['placePrediction']['text']['text']];
+                });
+
+                return $searchResults->toArray();
+            }
+        } else {
+            if (! empty($result['predictions'])) {
+                $searchResults = collect($result['predictions'])->mapWithKeys(function (array $item, int $key) {
+                    return [$item['place_id'] => $item['description']];
+                });
+
+                return $searchResults->toArray();
+            }
+        }
+
+        return [];
     }
 
     public function withFields(null|array|string|\Closure $fields): static
