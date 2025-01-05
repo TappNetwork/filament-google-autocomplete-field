@@ -30,7 +30,7 @@ This is the contents of the published config file:
 return [
 
     'api-key' => env('GOOGLE_PLACES_API_KEY', ''),
-    'verify-ssl' => false,
+    'verify-ssl' => true,
     'throw-on-errors' => false,
 
 ];
