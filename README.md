@@ -30,6 +30,8 @@ This is the contents of the published config file:
 return [
 
     'api-key' => env('GOOGLE_PLACES_API_KEY', ''),
+    'verify-ssl' => false,
+    'throw-on-errors' => false,
 
 ];
 ```
@@ -100,6 +102,16 @@ GoogleAutocomplete::make('google_search')
                 'data-google-field' => '{latitude}, {longitude}',
             ]),
     ]),
+```
+
+## Places API (original) and Places API (New)
+
+Both the **[Places API (original)](https://developers.google.com/maps/documentation/places/web-service/autocomplete)** and the **[Places API (New)](https://developers.google.com/maps/documentation/places/web-service/place-autocomplete)** are supported.
+By default, the Places API (original) it's used. To use the Places API (New) instead, add the `->placesApiNew()` method, like so:
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->placesApiNew()
 ```
 
 ## Available Options
@@ -257,97 +269,7 @@ GoogleAutocomplete::make('google_search')
 
 These following **Google API options** can be passed to the `GoogleAutocomplete` field:
 
-### Countries
-
-Add the `countries` method to restrict the countries that should be used for autocomplete search.
-
-The countries must be passed as a two character ISO 3166-1 Alpha-2 compatible country code. You can find the country codes available at [Wikipedia: List of ISO 3166 country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
-
-```php
-GoogleAutocomplete::make('google_search')
-    ->countries([
-        'US',
-        'AU',
-    ])
-```
-
-### Language
-
-The language which results should be returned. These are the [supported language codes](https://developers.google.com/maps/faq#languagesupport).
-
-```php
-GoogleAutocomplete::make('google_search')
-    ->language('pt-BR')
-```
-
-### Location
-
-The point around which to retrieve place information as `latitude,longitude`.
-
-Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#location) to a detailed description of this option.
-
-```php
-GoogleAutocomplete::make('google_search')
-    ->location(40.7585862,-73.9858202)
-```
-
-### LocationBias
-
-Prefer results in a specified area, by specifying either a radius plus lat/lng, or two lat/lng pairs representing the points of a rectangle. If this parameter is not specified, the API uses IP address biasing by default.
-
-Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#locationbias) to a detailed description of this option.
-
-### LocationRestriction
-
-Restrict results to a specified area, by specifying either a radius plus lat/lng, or two lat/lng pairs representing the points of a rectangle.
-
-Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#locationrestriction) to a detailed description of this option.
-
-### Offset
-
-The position, in the input term, of the last character that the service uses to match predictions. For example, if the input is Google and the offset is 3, the service will match on Goo. 
-
-```php
-GoogleAutocomplete::make('google_search')
-    ->offset(5)
-```
-
-### Origin
-
-The origin point as `latitude,longitude` from which to calculate straight-line distance to the destination specified.
-
-Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#origin) to a detailed description of this option.
-
-```php
-GoogleAutocomplete::make('google_search')
-    ->origin(40.7585862,-73.9858202)
-```
-
-### Radius
-
-The distance in meters within which to return place results.
-
-Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#radius) to a detailed description of this option.
-
-```php
-GoogleAutocomplete::make('google_search')
-    ->radius(10)
-```
-
-### Region
-
-The region code, specified as a [country code top-level domain (ccTLD)](https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains#Country_code_top-level_domains) two-character value. 
-
-```php
-GoogleAutocomplete::make('google_search')
-    ->region('uk')
-```
-
-### SessionToken
-
-Random string which identifies an autocomplete session for billing purposes.
-
-Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#sessiontoken) to a detailed description of this option.
+### OPTIONS FOR BOTH APIs
 
 ### PlaceTypes
 
@@ -362,7 +284,143 @@ GoogleAutocomplete::make('google_search')
     ])
 ```
 
-Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types) to a detailed description of this option.
+Please refer to the [Google Places API original documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#types) and [Google Places API New documentation](https://developers.google.com/maps/documentation/places/web-service/place-autocomplete#includedPrimaryTypes) to a detailed description of this option.
+
+### Language
+
+The language which results should be returned. These are the [supported language codes](https://developers.google.com/maps/faq#languagesupport).
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->language('pt-BR')
+```
+
+### Offset
+
+The position, in the input term, of the last character that the service uses to match predictions. For example, if the input is Google and the offset is 3, the service will match on Goo. 
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->offset(5)
+```
+
+### LocationBias
+
+Prefer results in a specified area, by specifying either a radius plus lat/lng, or two lat/lng pairs representing the points of a rectangle. If this parameter is not specified, the API uses IP address biasing by default.
+
+Please refer to the [Google Places API original documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#locationbias) and [Google Places API New](https://developers.google.com/maps/documentation/places/web-service/place-autocomplete#location-bias-restriction) to a detailed description of this option.
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->locationBias(
+        [
+            "circle" => [
+                "center" => [
+                    "latitude" => 37.7937,
+                    "longitude" => -122.3965
+                ],
+                "radius" => 500.0
+            ]
+        ]
+    )
+```
+
+### LocationRestriction
+
+Restrict results to a specified area, by specifying either a radius plus lat/lng, or two lat/lng pairs representing the points of a rectangle.
+
+Please refer to the [Google Places API original documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#locationrestriction) and [Google Places API New](https://developers.google.com/maps/documentation/places/web-service/place-autocomplete#location-bias-restriction) to a detailed description of this option.
+
+### Origin
+
+The origin point as `latitude,longitude` from which to calculate straight-line distance to the destination specified.
+
+Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#origin) to a detailed description of this option.
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->origin(40.7585862,-73.9858202)
+```
+
+### Region
+
+The region code used to format the response, specified as a [country code top-level domain (ccTLD)](https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains#Country_code_top-level_domains) two-character value. 
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->region('uk')
+```
+
+### SessionToken
+
+Random string which identifies an autocomplete session for billing purposes.
+
+Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#sessiontoken) to a detailed description of this option.
+
+
+### OPTIONS ONLY FOR PLACES API (ORIGINAL)
+
+### Countries
+
+Add the `countries` method to restrict the countries that should be used for autocomplete search.
+
+The countries must be passed as a two character ISO 3166-1 Alpha-2 compatible country code. You can find the country codes available at [Wikipedia: List of ISO 3166 country codes](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2).
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->countries([
+        'US',
+        'AU',
+    ])
+```
+
+### Location
+
+The point around which to retrieve place information as `latitude,longitude`.
+
+Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#location) to a detailed description of this option.
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->location(40.7585862,-73.9858202)
+```
+
+### Radius
+
+The distance in meters within which to return place results.
+
+Please refer to the [Google documentation](https://developers.google.com/maps/documentation/places/web-service/autocomplete#radius) to a detailed description of this option.
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->radius(10)
+```
+
+
+### OPTIONS ONLY FOR PLACES API (NEW)
+
+### IncludePureServiceAreaBusinesses
+
+`true` - includes businesses that visit or deliver to customers directly, but don't have a physical business location.
+`false` - returns only businesses with a physical business location.
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->includePureServiceAreaBusinesses(true)
+```
+
+### IncludedRegionCodes
+
+Only include results from the list of specified regions, specified as an array of up to 15 ccTLD ("top-level domain") two-character values. When omitted, no restrictions are applied to the response.
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->includedRegionCodes([
+        "de", 
+        "fr",
+    ])
+```
+
 
 ## Testing
 
