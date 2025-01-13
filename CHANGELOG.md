@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.7 - 2025-01-13
+
+### What's Changed
+
+* Allow multiple autocomplete instances by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/12
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.6...v1.0.7
+
 ## v1.0.6 - 2025-01-05
 
 ### What's Changed
