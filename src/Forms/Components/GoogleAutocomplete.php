@@ -60,7 +60,7 @@ class GoogleAutocomplete extends Component
     {
         $components = [];
 
-        $components[] = Forms\Components\Select::make('google_autocomplete')
+        $components[] = Forms\Components\Select::make('google_autocomplete_'.$this->name)
             ->native(false)
             ->dehydrated(false)
             ->allowHtml()
@@ -69,7 +69,7 @@ class GoogleAutocomplete extends Component
             ->searchingMessage(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.searching.message'))
             ->searchPrompt(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.search.prompt'))
             ->searchable()
-            ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete" />')))
+            ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_'.$this->name.'" />')))
             ->columnSpan($this->getAutocompleteFieldColumnSpan())
             ->getSearchResultsUsing(function (string $search): array {
                 $response = $this->getPlaceAutocomplete($search);
