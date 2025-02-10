@@ -39,6 +39,8 @@ class GoogleAutocomplete extends Component
 
     protected array|Closure $addressFieldsColumns = [];
 
+    protected string|Closure|null $autocompleteLabel = null;
+
     final public function __construct(string $name)
     {
         $this->name($name);
@@ -60,7 +62,7 @@ class GoogleAutocomplete extends Component
     {
         $components = [];
 
-        $components[] = Forms\Components\Select::make('google_autocomplete_'.$this->name)
+        $components[] = Forms\Components\Select::make($this->getAutocompleteLabel())
             ->native(false)
             ->dehydrated(false)
             ->allowHtml()
@@ -69,7 +71,7 @@ class GoogleAutocomplete extends Component
             ->searchingMessage(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.searching.message'))
             ->searchPrompt(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.search.prompt'))
             ->searchable()
-            ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_'.$this->name.'" />')))
+            ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_' . $this->getAutocompleteLabel() . '" />')))
             ->columnSpan($this->getAutocompleteFieldColumnSpan())
             ->getSearchResultsUsing(function (string $search): array {
                 $response = $this->getPlaceAutocomplete($search);
@@ -138,7 +140,7 @@ class GoogleAutocomplete extends Component
         foreach ($matches[1] as $item) {
             $valueToReplace = isset($googleFields[$item][$googleFieldValue]) ? $googleFields[$item][$googleFieldValue] : '';
 
-            $googleField = str_ireplace('{'.$item.'}', $valueToReplace, $googleField);
+            $googleField = str_ireplace('{' . $item . '}', $valueToReplace, $googleField);
         }
 
         return $googleField;
@@ -147,7 +149,7 @@ class GoogleAutocomplete extends Component
     protected function getPlaceAutocompleteResult($result)
     {
         if ($this->placesApiNew) {
-            if (isset($result['suggestions']) && ! empty($result['suggestions'])) {
+            if (isset($result['suggestions']) && !empty($result['suggestions'])) {
                 $searchResults = collect($result['suggestions'])->mapWithKeys(function (array $item, int $key) {
                     return [$item['placePrediction']['placeId'] => $item['placePrediction']['text']['text']];
                 });
@@ -155,7 +157,7 @@ class GoogleAutocomplete extends Component
                 return $searchResults->toArray();
             }
         } else {
-            if (! empty($result['predictions'])) {
+            if (!empty($result['predictions'])) {
                 $searchResults = collect($result['predictions'])->mapWithKeys(function (array $item, int $key) {
                     return [$item['place_id'] => $item['description']];
                 });
@@ -242,5 +244,17 @@ class GoogleAutocomplete extends Component
     public function getAutocompleteSearchDebounce(): ?int
     {
         return $this->evaluate($this->autocompleteSearchDebounce);
+    }
+
+    public function autocompleteLabel(string|Closure|null $label): static
+    {
+        $this->autocompleteLabel = $label;
+
+        return $this;
+    }
+
+    protected function getAutocompleteLabel(): string
+    {
+        return $this->evaluate($this->autocompleteLabel) ?? 'google_autocomplete_' . $this->name;
     }
 }
