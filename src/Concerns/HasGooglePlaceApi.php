@@ -91,9 +91,17 @@ trait HasGooglePlaceApi
     {
         $this->setGoogleApi();
 
-        $addressData = $this->googlePlaces->placeDetails($placeId);
+        $detailParams = [];
 
-        return $addressData;
+        if ($this->placesApiNew) {
+            $detailParams['languageCode'] = $this->params['languageCode'] ?? null;
+
+            return $this->googlePlaces->placeDetails($placeId, ['*'], $detailParams);
+        }
+
+        $detailParams['language'] = $this->params['language'] ?? null;
+
+        return $this->googlePlaces->placeDetails($placeId, $detailParams);
     }
 
     protected function getFormattedApiResults($data): array
