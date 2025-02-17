@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.9 - 2025-02-17
+
+### What's Changed
+
+* Add language in Place Details by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/19
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.8...v1.0.9
+
 ## v1.0.8 - 2025-02-10
 
 ### What's Changed
