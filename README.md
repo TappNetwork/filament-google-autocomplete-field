@@ -267,6 +267,17 @@ GoogleAutocomplete::make('google_search')
     ->autocompleteSearchDebounce(1000) // 1 second
 ```
 
+### Autocomplete Placeholder
+
+The placeholder can be modified using the `->autocompletePlaceholder()` method:
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->autocompletePlaceholder('Select a location')
+```
+
+## Google API Options
+
 These following **Google API options** can be passed to the `GoogleAutocomplete` field:
 
 ### OPTIONS FOR BOTH APIs
