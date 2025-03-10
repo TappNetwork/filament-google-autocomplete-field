@@ -41,6 +41,8 @@ class GoogleAutocomplete extends Component
 
     protected string|Closure|null $autocompleteLabel = null;
 
+    protected string|Closure|null $autocompletePlaceholder = null;
+
     final public function __construct(string $name)
     {
         $this->name($name);
@@ -67,6 +69,7 @@ class GoogleAutocomplete extends Component
             ->dehydrated(false)
             ->allowHtml()
             ->live()
+            ->placeholder($this->getAutocompletePlaceholder())
             ->searchDebounce($this->getAutocompleteSearchDebounce()) // 2 seconds
             ->searchingMessage(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.searching.message'))
             ->searchPrompt(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.search.prompt'))
@@ -256,5 +259,17 @@ class GoogleAutocomplete extends Component
     protected function getAutocompleteLabel(): string
     {
         return $this->evaluate($this->autocompleteLabel) ?? 'google_autocomplete_'.$this->name;
+    }
+
+    public function autocompletePlaceholder(string|Closure|null $placeholder): static
+    {
+        $this->autocompletePlaceholder = $placeholder;
+
+        return $this;
+    }
+
+    protected function getAutocompletePlaceholder(): string
+    {
+        return $this->evaluate($this->autocompletePlaceholder) ?? __('Select an option');
     }
 }
