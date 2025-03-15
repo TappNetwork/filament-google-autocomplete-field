@@ -41,6 +41,8 @@ class GoogleAutocomplete extends Component
 
     protected string|Closure|null $autocompleteLabel = null;
 
+    protected string|Closure|null $autocompleteName = null;
+
     protected string|Closure|null $autocompletePlaceholder = null;
 
     final public function __construct(string $name)
@@ -64,7 +66,8 @@ class GoogleAutocomplete extends Component
     {
         $components = [];
 
-        $components[] = Forms\Components\Select::make($this->getAutocompleteLabel())
+        $components[] = Forms\Components\Select::make($this->getAutocompleteName())
+            ->label($this->getAutocompleteLabel())
             ->native(false)
             ->dehydrated(false)
             ->allowHtml()
@@ -74,7 +77,7 @@ class GoogleAutocomplete extends Component
             ->searchingMessage(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.searching.message'))
             ->searchPrompt(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.search.prompt'))
             ->searchable()
-            ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_'.$this->getAutocompleteLabel().'" />')))
+            ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_'.$this->getAutocompleteName().'" />')))
             ->columnSpan($this->getAutocompleteFieldColumnSpan())
             ->getSearchResultsUsing(function (string $search): array {
                 $response = $this->getPlaceAutocomplete($search);
@@ -258,7 +261,19 @@ class GoogleAutocomplete extends Component
 
     protected function getAutocompleteLabel(): string
     {
-        return $this->evaluate($this->autocompleteLabel) ?? 'google_autocomplete_'.$this->name;
+        return $this->evaluate($this->autocompleteLabel) ?? $this->getLabel();
+    }
+
+    public function autocompleteName(string|Closure|null $name): static
+    {
+        $this->autocompleteName = $name;
+
+        return $this;
+    }
+
+    protected function getAutocompleteName(): string
+    {
+        return $this->evaluate($this->autocompleteName) ?? 'google_autocomplete_'.$this->name;
     }
 
     public function autocompletePlaceholder(string|Closure|null $placeholder): static
