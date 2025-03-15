@@ -267,6 +267,55 @@ GoogleAutocomplete::make('google_search')
     ->autocompleteSearchDebounce(1000) // 1 second
 ```
 
+### Autocomplete Label
+
+The label of the autocomplete select field can be modified using the `->autocompleteLabel()` method:
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->autocompleteLabel('Select a location')
+```
+
+### Autocomplete Placeholder
+
+The placeholder can be modified using the `->autocompletePlaceholder()` method:
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->autocompletePlaceholder('Select a location')
+```
+
+Example with modified `label`, `autocompleteLabel`, and `autocompletePlaceholder`:
+
+```php
+GoogleAutocomplete::make('google_search')
+    ->autocompleteLabel('Select a location')
+    ->autocompletePlaceholder('Click here to search')
+    ->label('Searching on Google...')
+    ->countries([
+        'us',
+        'au',
+    ])
+    ->placeTypes([
+        'book_store',
+        'cafe',
+    ])
+    ->withFields([
+        Forms\Components\TextInput::make('address')
+            ->extraInputAttributes([
+                'data-google-field' => '{street_number} {route}, {sublocality_level_1}',
+            ]),
+        Forms\Components\TextInput::make('city')
+            ->extraInputAttributes([
+                'data-google-field' => 'locality',
+            ]),
+    ]),
+```
+
+![Example with modified label, autocompleteLabel, and autocompletePlaceholder](https://raw.githubusercontent.com/TappNetwork/filament-google-autocomplete-field/main/docs/label_placeholder.jpg)
+
+## Google API Options
+
 These following **Google API options** can be passed to the `GoogleAutocomplete` field:
 
 ### OPTIONS FOR BOTH APIs
