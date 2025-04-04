@@ -79,7 +79,8 @@ class GoogleAutocomplete extends Component
             ->searchable()
             ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_'.$this->getAutocompleteName().'" />')))
             ->columnSpan($this->getAutocompleteFieldColumnSpan())
-            ->getSearchResultsUsing(function (string $search): array {
+            ->getSearchResultsUsing(function (string $search, Set $set): array {
+                $set($this->getAutocompleteName(), null);
                 $response = $this->getPlaceAutocomplete($search);
 
                 $result = $response->collect();
