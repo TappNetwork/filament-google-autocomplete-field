@@ -2,6 +2,18 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.12 - 2025-04-04
+
+### What's Changed
+
+* Reset autocomplete field when performing a new search by @AlexandreCConcept in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/32
+
+### New Contributors
+
+* @AlexandreCConcept made their first contribution in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/32
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.11...v1.0.12
+
 ## v1.0.11 - 2025-03-15
 
 ### What's Changed
