@@ -112,7 +112,7 @@ The Google autocomplete fields can be wrapped in a Form layout like `Fieldset` o
 Forms\Components\Fieldset::make('Address')
     ->schema([
         GoogleAutocomplete::make('google_search')
-        // ,,,
+        // ...
     ]),
 ```
 
@@ -122,7 +122,7 @@ Forms\Components\Fieldset::make('Address')
 Forms\Components\Section::make('Address')
     ->schema([
         GoogleAutocomplete::make('google_search')
-        // ,,,
+        // ...
     ]),
 ```
 
