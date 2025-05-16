@@ -109,9 +109,9 @@ GoogleAutocomplete::make('google_search')
 The Google autocomplete fields can be wrapped in a Form layout like `Fieldset` or `Section`:
 
 ```php
-Forms\Components\Fieldset::make('Address')
+Forms\Components\Fieldset::make('Google Search')
     ->schema([
-        GoogleAutocomplete::make('google_search')
+        GoogleAutocomplete::make('google_search_field')
         // ...
     ]),
 ```
@@ -119,9 +119,9 @@ Forms\Components\Fieldset::make('Address')
 ![Fieldset Layout](https://raw.githubusercontent.com/TappNetwork/filament-google-autocomplete-field/main/docs/fieldset_layout.png)
 
 ```php
-Forms\Components\Section::make('Address')
+Forms\Components\Section::make('Google Search')
     ->schema([
-        GoogleAutocomplete::make('google_search')
+        GoogleAutocomplete::make('google_search_field')
         // ...
     ]),
 ```
