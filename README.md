@@ -104,6 +104,30 @@ GoogleAutocomplete::make('google_search')
     ]),
 ```
 
+### Using form layouts
+
+The Google autocomplete fields can be wrapped in a Form layout like `Fieldset` or `Section`:
+
+```php
+Forms\Components\Fieldset::make('Address')
+    ->schema([
+        GoogleAutocomplete::make('google_search')
+        // ...
+    ]),
+```
+
+![Fieldset Layout](https://raw.githubusercontent.com/TappNetwork/filament-google-autocomplete-field/main/docs/fieldset_layout.png)
+
+```php
+Forms\Components\Section::make('Address')
+    ->schema([
+        GoogleAutocomplete::make('google_search')
+        // ...
+    ]),
+```
+
+![Section Layout](https://raw.githubusercontent.com/TappNetwork/filament-google-autocomplete-field/main/docs/section_layout.png)
+
 ## Places API (original) and Places API (New)
 
 Both the **[Places API (original)](https://developers.google.com/maps/documentation/places/web-service/autocomplete)** and the **[Places API (New)](https://developers.google.com/maps/documentation/places/web-service/place-autocomplete)** are supported.
