@@ -25,7 +25,7 @@ class GoogleAutocomplete extends Component
     /**
      * @var view-string
      */
-    protected string $view = 'filament-forms::components.fieldset';
+    protected string $view = 'filament-forms::components.group';
 
     protected bool|Closure $isRequired = false;
 
