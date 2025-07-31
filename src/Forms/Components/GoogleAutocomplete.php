@@ -101,7 +101,10 @@ class GoogleAutocomplete extends Component
                 $googleFields = $this->getFormattedApiResults($data);
 
                 foreach ($this->getWithFields() as $field) {
-                    $fieldExtraAttributes = $field->getExtraInputAttributes();
+                    // Check if the field is a Hidden component or has getExtraInputAttributes method
+                    $fieldExtraAttributes = $field instanceof Forms\Components\Hidden
+                        ? $field->getExtraAttributes()
+                        : $field->getExtraInputAttributes();
 
                     $googleFieldName = count($fieldExtraAttributes) > 0 && isset($fieldExtraAttributes['data-google-field']) ? $fieldExtraAttributes['data-google-field'] : $field->getName();
 
