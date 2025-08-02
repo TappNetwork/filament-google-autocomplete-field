@@ -72,6 +72,7 @@ class GoogleAutocomplete extends Component
             ->dehydrated(false)
             ->allowHtml()
             ->live()
+            ->required($this->getIsRequired())
             ->placeholder($this->getAutocompletePlaceholder())
             ->searchDebounce($this->getAutocompleteSearchDebounce()) // 2 seconds
             ->searchingMessage(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.searching.message'))
@@ -287,5 +288,17 @@ class GoogleAutocomplete extends Component
     protected function getAutocompletePlaceholder(): string
     {
         return $this->evaluate($this->autocompletePlaceholder) ?? __('Select an option');
+    }
+
+    public function required(bool|Closure $condition = true): static
+    {
+        $this->isRequired = $condition;
+
+        return $this;
+    }
+
+    public function getIsRequired(): bool
+    {
+        return $this->evaluate($this->isRequired);
     }
 }
