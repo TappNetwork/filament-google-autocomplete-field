@@ -10,12 +10,27 @@ This plugin provides an address autocomplete using [Google Place autocomplete AP
 > [!NOTE]
 > The [Google Places API package](https://github.com/SachinAgarwal1337/google-places-api) is used to make API requests to Google Places.
 
+## Version Compatibility
+
+ Filament | Filament Google Autocomplete Field
+:---------|:----------------------------------
+ 3.x      | 1.x
+ 4.x      | 4.x
+
 ## Installation
 
-You can install the package via composer:
+You can install the package via Composer:
+
+### For Filament 3
 
 ```bash
-composer require tapp/filament-google-autocomplete-field
+composer require tapp/filament-google-autocomplete-field:"^1.0"
+```
+
+### For Filament 4
+
+```bash
+composer require tapp/filament-google-autocomplete-field:"^4.0"
 ```
 
 You can publish the config file with:
