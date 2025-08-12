@@ -2,13 +2,13 @@
 
 namespace Tapp\FilamentGoogleAutocomplete\Forms\Components;
 
+use Closure;
 use Filament\Forms\Components\Field;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Concerns\HasLabel;
 use Filament\Schemas\Components\Concerns\HasName;
-use Filament\Forms\Components\Select;
 use Filament\Schemas\Components\Utilities\Set;
-use Filament\Forms\Components\TextInput;
-use Closure;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\HtmlString;
 use Tapp\FilamentGoogleAutocomplete\Concerns\CanFormatGoogleParams;
@@ -17,11 +17,11 @@ use Tapp\FilamentGoogleAutocomplete\Concerns\HasGooglePlaceApi;
 class GoogleAutocomplete extends Field
 {
     use CanFormatGoogleParams;
+    use HasGooglePlaceApi;
     use HasLabel {
         getLabel as getBaseLabel;
     }
     use HasName;
-    use HasGooglePlaceApi;
 
     /**
      * @var view-string
@@ -81,9 +81,9 @@ class GoogleAutocomplete extends Field
 
                     return $this->getPlaceAutocompleteResult($result);
                 } catch (\Exception $e) {
-                    info('ERROR in search: ' . $e->getMessage());
+                    info('ERROR in search: '.$e->getMessage());
 
-                    return ['error' => 'Search failed: ' . $e->getMessage()];
+                    return ['error' => 'Search failed: '.$e->getMessage()];
                 }
             })
             ->afterStateUpdated(function (?string $state, Set $set, Select $component) {
@@ -119,7 +119,7 @@ class GoogleAutocomplete extends Field
                         $set($field->getName(), $value);
                     }
                 } catch (\Exception $e) {
-                    info('ERROR in afterStateUpdated: ' . $e->getMessage());
+                    info('ERROR in afterStateUpdated: '.$e->getMessage());
                 }
             });
 
