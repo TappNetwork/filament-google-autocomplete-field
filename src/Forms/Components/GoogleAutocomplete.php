@@ -258,7 +258,7 @@ class GoogleAutocomplete extends Field
 
     protected function getAutocompleteLabel(): string
     {
-        return $this->evaluate($this->autocompleteLabel) ?? $this->getLabel() ?? 'Search';
+        return $this->evaluate($this->autocompleteLabel) ?? $this->getLabel() ?? __('Search');
     }
 
     public function autocompleteName(string|Closure|null $name): static
@@ -270,7 +270,7 @@ class GoogleAutocomplete extends Field
 
     protected function getAutocompleteName(): string
     {
-        return $this->evaluate($this->autocompleteName) ?? 'google_autocomplete_'.($this->getName() ?? 'default');
+        return $this->evaluate($this->autocompleteName) ?? 'google_autocomplete_'.$this->getName();
     }
 
     public function autocompletePlaceholder(string|Closure|null $placeholder): static
@@ -282,6 +282,6 @@ class GoogleAutocomplete extends Field
 
     protected function getAutocompletePlaceholder(): string
     {
-        return $this->evaluate($this->autocompletePlaceholder) ?? 'Select an option';
+        return $this->evaluate($this->autocompletePlaceholder) ?? __('Select an option');
     }
 }
