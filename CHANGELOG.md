@@ -2,6 +2,15 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.14 - 2025-08-12
+
+### What's Changed
+
+* Bump aglipanci/laravel-pint-action from 2.5 to 2.6 by @dependabot[bot] in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/38
+* Add Filament 4 installation instruction by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/45
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.13...v1.0.14
+
 ## v4.0.0 - 2025-08-12
 
 ### What's Changed
