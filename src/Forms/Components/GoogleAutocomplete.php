@@ -46,6 +46,8 @@ class GoogleAutocomplete extends Field
 
     protected string|Closure|null $autocompletePlaceholder = null;
 
+    protected $searchResults = [];
+
     protected function setUp(): void
     {
         parent::setUp();
@@ -69,7 +71,7 @@ class GoogleAutocomplete extends Field
             ->searchingMessage(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.searching.message'))
             ->searchPrompt(__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.search.prompt'))
             ->searchable()
-            ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_'.$this->getAutocompleteName().'" />')))
+            ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_' . $this->getAutocompleteName() . '" />')))
             ->columnSpan($this->getAutocompleteFieldColumnSpan())
             ->getSearchResultsUsing(function (string $search, Set $set): array {
                 $set($this->getAutocompleteName(), null);
@@ -79,13 +81,16 @@ class GoogleAutocomplete extends Field
 
                     $result = $response->collect();
 
-                    return $this->getPlaceAutocompleteResult($result);
-                } catch (\Exception $e) {
-                    info('ERROR in search: '.$e->getMessage());
+                    $this->searchResults = $this->getPlaceAutocompleteResult($result);
 
-                    return ['error' => 'Search failed: '.$e->getMessage()];
+                    return $this->searchResults;
+                } catch (\Exception $e) {
+                    info('ERROR in search: ' . $e->getMessage());
+
+                    return ['error' => 'Search failed: ' . $e->getMessage()];
                 }
             })
+            ->getOptionLabelUsing(fn($value) => $this->searchResults[$value] ?? $value)
             ->afterStateUpdated(function (?string $state, Set $set, Select $component) {
                 if ($state === null) {
                     foreach ($this->getWithFields() as $field) {
@@ -119,7 +124,7 @@ class GoogleAutocomplete extends Field
                         $set($field->getName(), $value);
                     }
                 } catch (\Exception $e) {
-                    info('ERROR in afterStateUpdated: '.$e->getMessage());
+                    info('ERROR in afterStateUpdated: ' . $e->getMessage());
                 }
             });
 
@@ -137,7 +142,7 @@ class GoogleAutocomplete extends Field
         foreach ($matches[1] as $item) {
             $valueToReplace = isset($googleFields[$item][$googleFieldValue]) ? $googleFields[$item][$googleFieldValue] : '';
 
-            $googleField = str_ireplace('{'.$item.'}', $valueToReplace, $googleField);
+            $googleField = str_ireplace('{' . $item . '}', $valueToReplace, $googleField);
         }
 
         return $googleField;
@@ -270,7 +275,7 @@ class GoogleAutocomplete extends Field
 
     protected function getAutocompleteName(): string
     {
-        return $this->evaluate($this->autocompleteName) ?? 'google_autocomplete_'.$this->getName();
+        return $this->evaluate($this->autocompleteName) ?? 'google_autocomplete_' . $this->getName();
     }
 
     public function autocompletePlaceholder(string|Closure|null $placeholder): static
