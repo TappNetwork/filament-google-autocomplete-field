@@ -2,6 +2,18 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v4.0.1 - 2025-08-19
+
+### What's Changed
+
+* Added getOptionLabelUsing method by @gladjanus43 in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/48
+
+### New Contributors
+
+* @gladjanus43 made their first contribution in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/48
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v4.0.0...v4.0.1
+
 ## v1.0.14 - 2025-08-12
 
 ### What's Changed
