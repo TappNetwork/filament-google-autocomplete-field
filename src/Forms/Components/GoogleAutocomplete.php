@@ -4,6 +4,7 @@ namespace Tapp\FilamentGoogleAutocomplete\Forms\Components;
 
 use Closure;
 use Filament\Forms\Components\Field;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Concerns\HasLabel;
@@ -106,8 +107,13 @@ class GoogleAutocomplete extends Field
                     $googleFields = $this->getFormattedApiResults($data);
 
                     foreach ($this->getWithFields() as $field) {
-                        $fieldExtraAttributes = $field->getExtraInputAttributes();
+                        // Check if the field is a Hidden component or has getExtraInputAttributes method
+                        $fieldExtraAttributes = $field instanceof Hidden
+                            ? $field->getExtraAttributes()
+                            : $field->getExtraInputAttributes();
+
                         $googleFieldName = count($fieldExtraAttributes) > 0 && isset($fieldExtraAttributes['data-google-field']) ? $fieldExtraAttributes['data-google-field'] : $field->getName();
+
                         $googleFieldValue = count($fieldExtraAttributes) > 0 && isset($fieldExtraAttributes['data-google-value']) ? $fieldExtraAttributes['data-google-value'] : 'long_name';
 
                         // if the field contains combined values
