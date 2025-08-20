@@ -2,6 +2,18 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.15 - 2025-08-20
+
+### What's Changed
+
+* Update GoogleAutocomplete field processing to handle Hidden components by @erchecho in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/39
+
+### New Contributors
+
+* @erchecho made their first contribution in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/39
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.14...v1.0.15
+
 ## v4.0.1 - 2025-08-19
 
 ### What's Changed
