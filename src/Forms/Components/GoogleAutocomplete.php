@@ -47,17 +47,11 @@ class GoogleAutocomplete extends Component
 
     protected $searchResults = [];
 
-    /**
-     * @param  string  $name
-     */
     final public function __construct(string $name)
     {
         $this->name($name);
     }
 
-    /**
-     * @param  string  $name
-     */
     public static function make(string $name): static
     {
         $static = app(static::class, ['name' => $name]);
