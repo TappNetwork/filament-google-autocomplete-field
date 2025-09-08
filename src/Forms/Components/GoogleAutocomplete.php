@@ -3,10 +3,10 @@
 namespace Tapp\FilamentGoogleAutocomplete\Forms\Components;
 
 use Closure;
-use Filament\Forms\Components\Field;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Component;
 use Filament\Schemas\Components\Concerns\HasLabel;
 use Filament\Schemas\Components\Concerns\HasName;
 use Filament\Schemas\Components\Utilities\Set;
@@ -15,7 +15,7 @@ use Illuminate\Support\HtmlString;
 use Tapp\FilamentGoogleAutocomplete\Concerns\CanFormatGoogleParams;
 use Tapp\FilamentGoogleAutocomplete\Concerns\HasGooglePlaceApi;
 
-class GoogleAutocomplete extends Field
+class GoogleAutocomplete extends Component
 {
     use CanFormatGoogleParams;
     use HasGooglePlaceApi;
@@ -28,8 +28,6 @@ class GoogleAutocomplete extends Field
      * @var view-string
      */
     protected string $view = 'filament-schemas::components.grid';
-
-    protected bool|Closure $isRequired = false;
 
     protected array $params = [];
 
@@ -49,14 +47,33 @@ class GoogleAutocomplete extends Field
 
     protected $searchResults = [];
 
+    /**
+     * @param  string  $name
+     */
+    final public function __construct(string $name)
+    {
+        $this->name($name);
+    }
+
+    /**
+     * @param  string  $name
+     */
+    public static function make(string $name): static
+    {
+        $static = app(static::class, ['name' => $name]);
+        $static->configure();
+
+        return $static;
+    }
+
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->columnSpanFull();
-
         // Build initial schema with default fields
         $this->schema($this->buildSchema());
+
+        $this->columnSpanFull();
     }
 
     protected function buildSchema(): array
