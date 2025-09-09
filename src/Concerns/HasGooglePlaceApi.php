@@ -146,9 +146,10 @@ trait HasGooglePlaceApi
 
         // array map with keys
         $addressFields = array_merge(...array_map(function ($key, $item) {
-            if (!isset($item['types']) || empty($item['types']) || !isset($item['types'][0])) {
+            if (! isset($item['types']) || empty($item['types']) || ! isset($item['types'][0])) {
                 return [];
             }
+
             return [
                 $item['types'][0] => [
                     'long_name' => $item[$this->currentApiNamingConventions['longText']],
