@@ -2,6 +2,18 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.16 - 2025-09-09
+
+### What's Changed
+
+* Undefined index 0 fix with Turkish localizations by @onursahindur in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/52
+
+### New Contributors
+
+* @onursahindur made their first contribution in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/52
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.15...v1.0.16
+
 ## v4.0.3 - 2025-09-08
 
 ### What's Changed
