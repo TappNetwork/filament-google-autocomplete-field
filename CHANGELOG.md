@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.18 - 2025-10-17
+
+### What's Changed
+
+* Update columnSpan return types by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/57
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.17...v1.0.18
+
 ## v4.0.4 - 2025-10-17
 
 ### What's Changed
