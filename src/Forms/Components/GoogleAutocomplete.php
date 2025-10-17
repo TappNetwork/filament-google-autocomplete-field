@@ -218,7 +218,7 @@ class GoogleAutocomplete extends Component
         return $this;
     }
 
-    public function getAutocompleteFieldColumnSpan(): ?string
+    public function getAutocompleteFieldColumnSpan(): int|array|string|null
     {
         return $this->evaluate($this->autocompleteFieldColumnSpan);
     }
