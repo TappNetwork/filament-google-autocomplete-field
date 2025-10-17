@@ -33,7 +33,7 @@ class GoogleAutocomplete extends Component
 
     public ?array $withFields = null;
 
-    protected string|Closure $autocompleteFieldColumnSpan = 'full';
+    protected int|array|string|Closure $autocompleteFieldColumnSpan = 'full';
 
     protected int|Closure $autocompleteSearchDebounce = 2000; // 2 seconds
 
@@ -224,7 +224,7 @@ class GoogleAutocomplete extends Component
         return $evaluated;
     }
 
-    public function autocompleteFieldColumnSpan(string|Closure $autocompleteFieldColumnSpan = 'full'): static
+    public function autocompleteFieldColumnSpan(int|array|string|Closure $autocompleteFieldColumnSpan = 'full'): static
     {
         $this->autocompleteFieldColumnSpan = $autocompleteFieldColumnSpan;
 
@@ -233,7 +233,7 @@ class GoogleAutocomplete extends Component
         return $this;
     }
 
-    public function getAutocompleteFieldColumnSpan(): ?string
+    public function getAutocompleteFieldColumnSpan(): int|array|string|null
     {
         return $this->evaluate($this->autocompleteFieldColumnSpan);
     }
