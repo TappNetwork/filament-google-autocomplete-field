@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v4.0.4 - 2025-10-17
+
+### What's Changed
+
+* Add int|array to autocompleteFieldColumnSpan() by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/56
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v4.0.3...v4.0.4
+
 ## v1.0.17 - 2025-10-17
 
 ### What's Changed
