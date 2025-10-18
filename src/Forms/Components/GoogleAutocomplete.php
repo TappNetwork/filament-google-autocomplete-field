@@ -193,7 +193,7 @@ class GoogleAutocomplete extends Component
         $this->withFields = $fields;
 
         // Rebuild schema with new fields
-        $this->schema($this->buildSchema());
+        $this->schema($this->buildSchema())->columns($this->autocompleteFieldColumnSpan);
 
         return $this;
     }
