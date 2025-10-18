@@ -80,7 +80,10 @@ trait HasGooglePlaceApi
     {
         $this->setGoogleApi();
 
+        unset($this->params['autocompleteFieldColumnSpan']);
+
         if ($this->placesApiNew) {
+            unset($this->params['autocompleteFieldColumnSpan']);
             return $this->googlePlaces->autocomplete($search, false, ['*'], $this->params);
         }
 
