@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v4.0.5 - 2025-11-03
+
+### What's Changed
+
+* Unset autocompleteFieldColumnSpan params on HasGooglePlaceApi by @trippo in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/59
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v4.0.4...v4.0.5
+
 ## v1.0.19 - 2025-11-03
 
 ### What's Changed
