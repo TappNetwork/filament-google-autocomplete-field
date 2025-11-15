@@ -265,8 +265,8 @@ class GoogleAutocomplete extends Component
 
     protected function getAutocompleteLabel(): string
     {
-        return $this->evaluate($this->autocompleteLabel) 
-            ?? __('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.label') 
+        return $this->evaluate($this->autocompleteLabel)
+            ?? __('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.label')
             ?? $this->getLabel();
     }
 
@@ -291,7 +291,7 @@ class GoogleAutocomplete extends Component
 
     protected function getAutocompletePlaceholder(): string
     {
-        return $this->evaluate($this->autocompletePlaceholder) 
+        return $this->evaluate($this->autocompletePlaceholder)
             ?? __('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.placeholder');
     }
 }
