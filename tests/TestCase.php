@@ -19,6 +19,13 @@ use Tapp\FilamentGoogleAutocomplete\FilamentGoogleAutocompleteServiceProvider;
 
 class TestCase extends Orchestra
 {
+    /**
+     * The latest response from the application.
+     *
+     * @var \Illuminate\Testing\TestResponse|null
+     */
+    public static $latestResponse;
+
     protected function setUp(): void
     {
         parent::setUp();
