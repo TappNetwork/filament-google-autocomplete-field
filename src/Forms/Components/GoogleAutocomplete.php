@@ -263,7 +263,7 @@ class GoogleAutocomplete extends Component
         return $this;
     }
 
-     protected function getAutocompleteLabel(): string
+    protected function getAutocompleteLabel(): string
     {
         return $this->evaluate($this->autocompleteLabel)
             ?: (__('filament-google-autocomplete-field::filament-google-autocomplete-field.autocomplete.label')
