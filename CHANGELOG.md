@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v4.0.6 - 2025-11-16
+
+### What's Changed
+
+* Add localization to label and placeholder by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/64
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v4.0.5...v4.0.6
+
 ## v1.0.21 - 2025-11-16
 
 ### What's Changed
