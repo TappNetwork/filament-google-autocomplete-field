@@ -2,6 +2,14 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.21 - 2025-11-16
+
+### What's Changed
+
+* Larastan fix by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/63
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.20...v1.0.21
+
 ## v1.0.20 - 2025-11-15
 
 ### What's Changed
