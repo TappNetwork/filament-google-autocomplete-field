@@ -85,6 +85,12 @@ class GoogleAutocomplete extends Component
             ->searchable()
             ->hint(new HtmlString(Blade::render('<x-filament::loading-indicator class="h5 w-5" wire:loading wire:target="data.google_autocomplete_'.$this->getAutocompleteName().'" />')))
             ->columnSpan($this->getAutocompleteFieldColumnSpan())
+            ->afterStateHydrated(function (Select $component, $get): void {
+                $existingValue = $get($this->getName());
+                if ($existingValue) {
+                    $component->state('existing');
+                }
+            })
             ->getSearchResultsUsing(function (string $search, Set $set): array {
                 $set($this->getAutocompleteName(), null);
 
@@ -102,11 +108,18 @@ class GoogleAutocomplete extends Component
                     return ['error' => 'Search failed: '.$e->getMessage()];
                 }
             })
-            ->getOptionLabelUsing(fn ($value) => $this->searchResults[$value] ?? $value)
+            ->getOptionLabelUsing(function ($value, $get) {
+                if ($value === 'existing') {
+                    return $get($this->getName());
+                }
+                return $this->searchResults[$value] ?? $value;
+            })
             ->afterStateUpdated(function (?string $state, Set $set, Select $component) {
-                if ($state === null) {
-                    foreach ($this->getWithFields() as $field) {
-                        $set($field->getName(), null);
+                if ($state === null || $state === 'existing') {
+                    if ($state === null) {
+                        foreach ($this->getWithFields() as $field) {
+                            $set($field->getName(), null);
+                        }
                     }
 
                     return;
