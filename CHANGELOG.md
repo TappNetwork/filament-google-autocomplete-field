@@ -2,6 +2,17 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v1.0.22 - 2026-01-22
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/68
+* Bump actions/checkout from 4 to 6 by @dependabot[bot] in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/65
+* Bump stefanzweifel/git-auto-commit-action from 5 to 7 by @dependabot[bot] in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/60
+* Updates for new branch by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/69
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v1.0.21...v1.0.22
+
 ## v4.0.6 - 2025-11-16
 
 ### What's Changed
