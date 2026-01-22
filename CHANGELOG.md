@@ -2,6 +2,15 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v4.0.7 - 2026-01-22
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 2.4.0 to 2.5.0 by @dependabot[bot] in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/70
+* Add Filament 5 support by @andreia in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/74
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v4.0.6...v4.0.7
+
 ## v1.0.13 - 2025-05-16
 
 ### What's Changed
