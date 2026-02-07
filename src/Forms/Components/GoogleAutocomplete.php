@@ -139,6 +139,7 @@ class GoogleAutocomplete extends Component
                         }
 
                         $set($field->getName(), $value);
+                        $field->callAfterStateUpdated();
                     }
                 } catch (\Exception $e) {
                     info('ERROR in afterStateUpdated: '.$e->getMessage());
