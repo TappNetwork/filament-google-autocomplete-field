@@ -2,6 +2,18 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v4.1.3 - 2026-04-21
+
+### What's Changed
+
+* call after state updated by @bAngerman in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/75
+
+### New Contributors
+
+* @bAngerman made their first contribution in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/75
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v4.1.2...v4.1.3
+
 ## v4.1.2 - 2026-04-09
 
 ### What's Changed
