@@ -2,6 +2,19 @@
 
 All notable changes to `filament-google-autocomplete-field` will be documented in this file.
 
+## v4.2.0 - 2026-04-26
+
+### What's Changed
+
+* Bump dependabot/fetch-metadata from 3.0.0 to 3.1.0 by @dependabot[bot] in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/86
+* Drop PHP 8.2 support, add PHP 8.5 by @swilla in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/87
+
+### New Contributors
+
+* @swilla made their first contribution in https://github.com/TappNetwork/filament-google-autocomplete-field/pull/87
+
+**Full Changelog**: https://github.com/TappNetwork/filament-google-autocomplete-field/compare/v4.1.3...v4.2.0
+
 ## v4.1.3 - 2026-04-21
 
 ### What's Changed
